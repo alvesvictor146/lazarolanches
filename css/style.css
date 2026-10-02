@@ -1670,6 +1670,17 @@ body {
     
     .hero-content {
         align-items: center;
+        text-align: center;
+    }
+    
+    .hero-pill-badge {
+        align-self: center;
+        margin: 0 auto;
+    }
+    
+    .hero-description {
+        text-align: center;
+        margin: 0 auto;
     }
     
     .hero-actions {
@@ -1682,7 +1693,26 @@ body {
     
     .footer-container {
         grid-template-columns: 1fr;
+        text-align: center;
         gap: 2rem;
+    }
+
+    .footer-brand {
+        align-items: center;
+    }
+
+    .footer-brand .brand-wrapper {
+        justify-content: center;
+    }
+
+    .footer-col ul {
+        align-items: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
     }
 }
 
@@ -1691,29 +1721,214 @@ body {
         display: none;
     }
     
+    .hero-section {
+        padding: 2.5rem 1rem 2rem;
+        min-height: auto;
+    }
+
     .hero-title {
-        font-size: 2.4rem;
+        font-size: clamp(1.4rem, 6vw, 1.95rem);
+        text-align: center;
+        align-items: center;
+        gap: 0.2rem;
+        width: 100%;
+    }
+
+    .hero-title-line {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .hero-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-width: 94%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0.5rem auto 0;
+        gap: 0.75rem;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.92rem;
+    }
+
+    .hero-stats-row {
+        justify-content: center;
+        align-items: center;
+        gap: 1.8rem;
+        width: 100%;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.35rem;
+    }
+
+    .stat-label {
+        font-size: 0.72rem;
+    }
+
+    /* Hero Visual Centered & Scaled */
+    .hero-visual {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.5rem auto 0;
     }
     
     .hero-image-stage {
         width: 100%;
-        max-width: 340px;
-        height: 340px;
+        max-width: 290px;
+        height: 290px;
     }
     
     .floating-badge {
-        padding: 0.6rem 0.9rem;
+        padding: 0.5rem 0.85rem;
+        gap: 0.5rem;
+        border-radius: var(--radius-sm);
+    }
+
+    .floating-badge-icon {
+        font-size: 1.35rem;
+    }
+
+    .badge-bold {
+        font-size: 0.8rem;
+    }
+
+    .badge-desc {
+        font-size: 0.65rem;
     }
     
     .floating-badge-top {
-        left: -4%;
+        top: 10px;
+        left: -10px;
     }
     
     .floating-badge-bottom {
-        right: -4%;
+        bottom: 10px;
+        right: -10px;
     }
-    
+
+    /* Delivery strip mobile */
+    .delivery-strip-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+    }
+
+    .strip-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .strip-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .strip-actions .btn {
+        width: 100%;
+    }
+
+    /* Category bar mobile */
+    .category-filter-outer {
+        top: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .category-filter-wrap {
+        padding: 0.65rem 0.85rem;
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+
+    .cat-btn {
+        padding: 0.55rem 1rem;
+        font-size: 0.82rem;
+        gap: 0.4rem;
+    }
+
+    /* Menu Grid mobile */
+    .menu-section {
+        padding: 2.5rem 1rem 4.5rem;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.88rem;
+    }
+
     .menu-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .card-item {
+        max-width: 400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .card-media-wrapper {
+        height: 200px;
+    }
+
+    .card-title {
+        font-size: 1.15rem;
+    }
+
+    .card-price {
+        font-size: 1.25rem;
+    }
+
+    .card-body {
+        padding: 1.15rem;
+    }
+
+    /* Floating Order Bar mobile */
+    .floating-order-bar {
+        bottom: 1rem;
+        width: calc(100% - 1.25rem);
+        padding: 0.6rem 0.95rem;
+    }
+
+    .floating-bar-badge {
+        font-size: 0.75rem;
+        padding: 3px 8px;
+    }
+
+    .floating-bar-total {
+        font-size: 1.1rem;
+    }
+
+    .floating-order-bar .btn {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    /* Flyers mobile */
+    .flyer-thumb-card {
+        flex: 0 0 240px;
+    }
+
+    .flyer-thumb-card img {
+        height: 320px;
     }
 }
