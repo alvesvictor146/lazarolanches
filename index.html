@@ -288,8 +288,23 @@
                 <span>Finalizar Pedido no WhatsApp</span>
                 <span>🟢</span>
             </button>
+            <button class="btn btn-outline btn-sm magnetic-btn" id="cartDrawerContinueBtn">
+                <span>➕ Continuar Escolhendo Mais Itens</span>
+            </button>
         </div>
     </aside>
+
+    <!-- Floating Bottom Order Bar (Visível quando há itens no pedido) -->
+    <div class="floating-order-bar" id="floatingOrderBar">
+        <div class="floating-bar-info">
+            <span class="floating-bar-badge" id="floatingBarCount">0 itens</span>
+            <span class="floating-bar-total" id="floatingBarTotal">R$ 0,00</span>
+        </div>
+        <button class="btn btn-whatsapp btn-sm magnetic-btn" id="floatingBarFinishBtn">
+            <span>Ver Pedido / Finalizar</span>
+            <span>🛍️</span>
+        </button>
+    </div>
 
     <!-- Core Scripts -->
     <script src="js/data.js"></script>

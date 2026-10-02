@@ -631,13 +631,17 @@ function openOrderModal(item) {
 
         <div class="modal-footer">
             <div class="order-total-bar">
-                <span>Total do Pedido:</span>
+                <span>Subtotal deste item:</span>
                 <span class="order-total-price" id="modalFooterTotal">R$ ${(item.price).toFixed(2).replace('.', ',')}</span>
             </div>
-            <button class="btn btn-whatsapp magnetic-btn" id="modalConfirmWhatsappBtn">
-                <span>Enviar Pedido para o WhatsApp</span>
-                <span>🟢</span>
-            </button>
+            <div class="modal-actions-stacked">
+                <button class="btn btn-primary magnetic-btn" id="modalAddToCartBtn" style="width: 100%;">
+                    <span>➕ Adicionar à Sacola (+ Escolher Mais Itens)</span>
+                </button>
+                <button class="btn btn-whatsapp magnetic-btn" id="modalConfirmWhatsappBtn" style="width: 100%;">
+                    <span>🟢 Pedir Apenas Este Item no WhatsApp</span>
+                </button>
+            </div>
         </div>
     `;
 
@@ -685,7 +689,28 @@ function openOrderModal(item) {
         });
     });
 
-    // Send to WhatsApp
+    // Option 1: Add to Cart and continue choosing more items
+    document.getElementById("modalAddToCartBtn").addEventListener("click", () => {
+        const notes = document.getElementById("modalNotesInput").value.trim();
+        const address = document.getElementById("modalAddressInput").value.trim();
+        const clientName = document.getElementById("modalClientName").value.trim();
+
+        if (address) {
+            AppState.userAddress = { formatted: address, manual: true };
+            localStorage.setItem("lazaros_address", JSON.stringify(AppState.userAddress));
+            updateAddressDisplay();
+        }
+        if (clientName) {
+            localStorage.setItem("lazaros_client_name", clientName);
+        }
+
+        addToCart(item.id, qty, notes);
+        modal.classList.remove("open");
+        playAudioFeedback("success");
+        showToast(`🎉 ${qty}x ${item.name} adicionado ao pedido! Você pode escolher mais itens abaixo.`);
+    });
+
+    // Option 2: Send this single item immediately to WhatsApp
     document.getElementById("modalConfirmWhatsappBtn").addEventListener("click", () => {
         const address = document.getElementById("modalAddressInput").value.trim();
         const clientName = document.getElementById("modalClientName").value.trim();
@@ -738,30 +763,47 @@ function openOrderModal(item) {
 /* ==========================================================================
    CART & MULTI-ITEM CHECKOUT
    ========================================================================== */
-function addToCart(itemId) {
+function addToCart(itemId, qty = 1, notes = "") {
     const item = MENU_ITEMS.find(i => i.id === itemId);
     if (!item) return;
 
-    const existing = AppState.cart.find(c => c.id === itemId);
+    // Check if item with same ID and notes already exists
+    const existing = AppState.cart.find(c => c.id === itemId && (c.notes || "") === (notes || ""));
     if (existing) {
-        existing.quantity += 1;
+        existing.quantity += qty;
     } else {
-        AppState.cart.push({ ...item, quantity: 1 });
+        AppState.cart.push({ ...item, quantity: qty, notes: notes });
     }
 
     localStorage.setItem("lazaros_cart", JSON.stringify(AppState.cart));
     updateCartUI();
     playAudioFeedback("pop");
-    showToast(`🛒 ${item.name} adicionado à sacola!`);
 }
 
 function updateCartUI() {
     const totalCount = AppState.cart.reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = AppState.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    // Navbar Badge
     const badge = document.getElementById("cartCountBadge");
     if (badge) {
         badge.textContent = totalCount;
         badge.style.transform = "scale(1.3)";
         setTimeout(() => badge.style.transform = "scale(1)", 200);
+    }
+
+    // Floating Order Bar
+    const floatBar = document.getElementById("floatingOrderBar");
+    const floatCount = document.getElementById("floatingBarCount");
+    const floatTotal = document.getElementById("floatingBarTotal");
+    if (floatBar) {
+        if (totalCount > 0) {
+            floatBar.classList.add("show");
+            if (floatCount) floatCount.textContent = `${totalCount} ${totalCount === 1 ? 'item' : 'itens'}`;
+            if (floatTotal) floatTotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        } else {
+            floatBar.classList.remove("show");
+        }
     }
 
     // Render cart items inside drawer
@@ -781,21 +823,20 @@ function updateCartUI() {
         return;
     }
 
-    let subtotal = 0;
-    list.innerHTML = AppState.cart.map(item => {
+    list.innerHTML = AppState.cart.map((item, idx) => {
         const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
         return `
             <div class="cart-item-row">
                 <img src="${item.image}" alt="${item.name}" />
                 <div class="cart-item-meta">
                     <h5>${item.name}</h5>
+                    ${item.notes ? `<small style="color: var(--primary-light); display:block; font-size: 0.78rem;">📝 ${item.notes}</small>` : ''}
                     <div class="price">R$ ${itemTotal.toFixed(2).replace('.', ',')}</div>
                 </div>
                 <div class="qty-selector">
-                    <button class="qty-btn" onclick="changeCartQty('${item.id}', -1)">-</button>
+                    <button class="qty-btn" onclick="changeCartQty(${idx}, -1)">-</button>
                     <span class="qty-display">${item.quantity}</span>
-                    <button class="qty-btn" onclick="changeCartQty('${item.id}', 1)">+</button>
+                    <button class="qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
                 </div>
             </div>
         `;
@@ -806,13 +847,12 @@ function updateCartUI() {
     }
 }
 
-window.changeCartQty = function(itemId, delta) {
-    const item = AppState.cart.find(c => c.id === itemId);
-    if (!item) return;
+window.changeCartQty = function(index, delta) {
+    if (!AppState.cart[index]) return;
 
-    item.quantity += delta;
-    if (item.quantity <= 0) {
-        AppState.cart = AppState.cart.filter(c => c.id !== itemId);
+    AppState.cart[index].quantity += delta;
+    if (AppState.cart[index].quantity <= 0) {
+        AppState.cart.splice(index, 1);
     }
 
     localStorage.setItem("lazaros_cart", JSON.stringify(AppState.cart));
@@ -1144,6 +1184,26 @@ function setupEventListeners() {
     if (cartCheckoutBtn) {
         cartCheckoutBtn.addEventListener("click", () => {
             checkoutCartWhatsApp();
+        });
+    }
+
+    // Floating Bar Button
+    const floatBarBtn = document.getElementById("floatingBarFinishBtn");
+    if (floatBarBtn && cartDrawer) {
+        floatBarBtn.addEventListener("click", () => {
+            playAudioFeedback("click");
+            cartDrawer.classList.add("open");
+        });
+    }
+
+    // Continue Shopping button inside drawer
+    const continueBtn = document.getElementById("cartDrawerContinueBtn");
+    if (continueBtn && cartDrawer) {
+        continueBtn.addEventListener("click", () => {
+            playAudioFeedback("click");
+            cartDrawer.classList.remove("open");
+            const menuSection = document.getElementById("cardapio");
+            if (menuSection) menuSection.scrollIntoView({ behavior: "smooth" });
         });
     }
 
