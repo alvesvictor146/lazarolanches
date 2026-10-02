@@ -271,13 +271,13 @@ function initAnimations() {
             const offsetY = (e.clientY - centerY) / centerY;
 
             if (burgerImg) {
-                burgerImg.style.transform = `translate3d(${offsetX * 18}px, ${offsetY * 18}px, 40px) rotate(${offsetX * 3}deg)`;
+                burgerImg.style.transform = `translate3d(${offsetX * 18}px, ${offsetY * 18}px, 20px) rotate(${offsetX * 3}deg)`;
             }
             if (topBadge) {
-                topBadge.style.transform = `translate3d(${offsetX * -25}px, ${offsetY * -25}px, 60px)`;
+                topBadge.style.transform = `translate3d(${offsetX * -20}px, ${offsetY * -20}px, 90px)`;
             }
             if (bottomBadge) {
-                bottomBadge.style.transform = `translate3d(${offsetX * 20}px, ${offsetY * 20}px, 60px)`;
+                bottomBadge.style.transform = `translate3d(${offsetX * 18}px, ${offsetY * 18}px, 90px)`;
             }
         });
     }
@@ -317,25 +317,44 @@ function initIntersectionReveal() {
 }
 
 /* ==========================================================================
-   TEXT REVEAL & CHARACTER REVEAL
+   TEXT REVEAL & CHARACTER REVEAL (PRESERVES WORDS INTACT)
    ========================================================================== */
 function initTextReveal() {
     const textReveals = document.querySelectorAll(".char-reveal");
 
     textReveals.forEach(el => {
-        const text = el.innerText.trim();
+        const fullText = el.innerText.trim();
+        const words = fullText.split(/\s+/);
         el.innerHTML = "";
-        
-        [...text].forEach((char, i) => {
-            const span = document.createElement("span");
-            span.innerHTML = char === " " ? "&nbsp;" : char;
-            span.style.transitionDelay = `${i * 35}ms`;
-            el.appendChild(span);
+
+        let charCount = 0;
+        words.forEach((word, wIdx) => {
+            const wordSpan = document.createElement("span");
+            wordSpan.className = "word-token";
+
+            [...word].forEach((char) => {
+                const charSpan = document.createElement("span");
+                charSpan.className = "char-token";
+                charSpan.textContent = char;
+                charSpan.style.transitionDelay = `${charCount * 30}ms`;
+                wordSpan.appendChild(charSpan);
+                charCount++;
+            });
+
+            el.appendChild(wordSpan);
+
+            if (wIdx < words.length - 1) {
+                const spaceSpan = document.createElement("span");
+                spaceSpan.innerHTML = "&nbsp;";
+                spaceSpan.style.display = "inline-block";
+                el.appendChild(spaceSpan);
+                charCount++;
+            }
         });
 
         setTimeout(() => {
             el.classList.add("revealed");
-        }, 150);
+        }, 120);
     });
 }
 
