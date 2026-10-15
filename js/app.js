@@ -570,6 +570,21 @@ function openOrderModal(item) {
                 </div>
             </div>
 
+            <!-- Observações ou Ingredientes (Logo abaixo do lanche e valor) -->
+            <div class="form-group modal-notes-group">
+                <label for="modalNotesInput" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>✏️ Observações ou Ingredientes</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 400;">(Opcional)</span>
+                </label>
+                <textarea id="modalNotesInput" class="form-control" rows="2" 
+                          placeholder="Ex: Sem cebola, carne bem passada, sem maionese, molho à parte..."></textarea>
+            </div>
+
+            <!-- Dica visual de rolagem para telas menores / mobile -->
+            <div class="modal-scroll-hint">
+                <span>👇 Role para baixo para dados de entrega e pagamento</span>
+            </div>
+
             <!-- Geolocation & Address Section -->
             <div class="geo-action-box">
                 <p style="font-size: 0.88rem; color: var(--text-sub);">
@@ -602,12 +617,6 @@ function openOrderModal(item) {
                         <button type="button" class="qty-btn" id="qtyPlus">+</button>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="modalNotesInput">Observações ou Ingredientes (Opcional)</label>
-                <textarea id="modalNotesInput" class="form-control" rows="2" 
-                          placeholder="Ex: Sem cebola, carne bem passada, refrigerante: Coca-Cola"></textarea>
             </div>
 
             <div class="form-group">
@@ -892,6 +901,11 @@ function checkoutCartWhatsApp() {
                         </li>
                     `).join("")}
                 </ul>
+            </div>
+
+            <!-- Dica visual de rolagem para telas menores / mobile -->
+            <div class="modal-scroll-hint">
+                <span>👇 Role para preencher endereço e pagamento</span>
             </div>
 
             <!-- Geolocation & Address Section -->
