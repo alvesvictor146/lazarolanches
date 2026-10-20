@@ -94,7 +94,7 @@ function renderMenuItems() {
             <div class="card-shine"></div>
             <div class="card-media-wrapper">
                 <span class="card-badge-pill ${item.highlight ? 'highlight' : ''}">${item.badge}</span>
-                <img src="${item.image}" alt="${item.name}" class="card-img" loading="lazy" />
+                <img src="${item.image}" alt="${item.name}" class="card-img" style="${item.objectPosition ? `object-position: ${item.objectPosition};` : ''}" loading="lazy" />
             </div>
             <div class="card-body">
                 <div class="card-header-row">
@@ -563,7 +563,7 @@ function openOrderModal(item) {
         <div class="modal-body">
             <!-- Item Preview -->
             <div class="modal-item-preview">
-                <img src="${item.image}" alt="${item.name}" class="modal-item-thumb" />
+                <img src="${item.image}" alt="${item.name}" class="modal-item-thumb" style="${item.objectPosition ? `object-position: ${item.objectPosition};` : ''}" />
                 <div class="modal-item-info">
                     <h4>${item.name}</h4>
                     <div class="item-price" id="modalItemTotalPrice">R$ ${(item.price).toFixed(2).replace('.', ',')}</div>
@@ -825,7 +825,7 @@ function updateCartUI() {
             <div class="cart-empty-state">
                 <div class="cart-empty-icon">🛍️</div>
                 <h4>Sua sacola está vazia</h4>
-                <p>Selecione seus lanches e açaís favoritos no cardápio!</p>
+                <p>Selecione seus lanches, combos ou doces favoritos no cardápio!</p>
             </div>
         `;
         if (subtotalEl) subtotalEl.textContent = "R$ 0,00";
@@ -836,7 +836,7 @@ function updateCartUI() {
         const itemTotal = item.price * item.quantity;
         return `
             <div class="cart-item-row">
-                <img src="${item.image}" alt="${item.name}" />
+                <img src="${item.image}" alt="${item.name}" style="${item.objectPosition ? `object-position: ${item.objectPosition};` : ''}" />
                 <div class="cart-item-meta">
                     <h5>${item.name}</h5>
                     ${item.notes ? `<small style="color: var(--primary-light); display:block; font-size: 0.78rem;">📝 ${item.notes}</small>` : ''}

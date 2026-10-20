@@ -3,6 +3,8 @@
 Thumbs.db
 *.log
 
-# IDE
+# IDE e shims locais
 .vscode/
 .idea/
+powershell.cmd
+powershell.bat
