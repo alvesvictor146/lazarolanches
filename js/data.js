@@ -23,19 +23,55 @@ const RESTAURANT_CONFIG = {
 };
 
 const MENU_CATEGORIES = [
-    { id: "all", name: "Todos os Itens", icon: "✨" },
-    { id: "artesanais", name: "Lanches Artesanais", icon: "🥩" },
-    { id: "doces", name: "Novidades Doces", icon: "🍫" },
-    { id: "novidades", name: "Novidades Salgadas", icon: "🔥" },
-    { id: "combos", name: "Combos Simples", icon: "🍔" },
-    { id: "mega", name: "Mega Combos", icon: "👑" },
-    { id: "lanches", name: "Lanches Tradicionais", icon: "🥪" },
-    { id: "pasteis", name: "Pastéis Fritos", icon: "🥟" },
-    { id: "porcoes", name: "Porções de Batata", icon: "🍟" },
-    { id: "bebidas", name: "Bebidas Geladas", icon: "🥤" }
+    { id: "promocao", name: "PROMOÇÃO" },
+    { id: "artesanais", name: "Artesanais" },
+    { id: "doces", name: "Novidades Doces" },
+    { id: "novidades", name: "Novidades Salgadas" },
+    { id: "combos", name: "Combos" },
+    { id: "mega", name: "Mega Combos" },
+    { id: "lanches", name: "Tradicionais" },
+    { id: "pasteis", name: "Pastéis" },
+    { id: "porcoes", name: "Porções" },
+    { id: "bebidas", name: "Bebidas" }
 ];
 
 const MENU_ITEMS = [
+    // =========================================================================
+    // 0. PROMOÇÕES ESPECIAIS (Destaques da Casa)
+    // =========================================================================
+    {
+        id: "promo_xbacon_combo",
+        category: "promocao",
+        name: "X-Bacon + Batata Frita P + Sukita 200ml",
+        price: 30.00,
+        badge: "Super Promoção",
+        description: "Pão macio, hambúrguer suculento, queijo derretido, bacon fatiado crocante, alface, tomate e molhos especiais + batata frita pequena + refrigerante gelado.",
+        ingredients: ["Pão", "Hambúrguer", "Bacon", "Queijo", "Batata Frita P", "Sukita 200ml"],
+        image: "assets/combo_xbacon.jpg",
+        highlight: true
+    },
+    {
+        id: "promo_xcalabresa_combo",
+        category: "promocao",
+        name: "X-Calabresa + Batata Frita P + Sukita 200ml",
+        price: 30.00,
+        badge: "Super Promoção",
+        description: "Pão artesanal, hambúrguer, queijo derretido, calabresa fatiada dourada, alface, tomate e molhos da casa + batata frita crocante + sukita gelada.",
+        ingredients: ["Pão", "Hambúrguer", "Calabresa", "Queijo", "Batata Frita P", "Sukita 200ml"],
+        image: "assets/combo1.jpg",
+        highlight: true
+    },
+    {
+        id: "promo_artesanal_cheddar",
+        category: "promocao",
+        name: "Combo Cheddar Artesanal + Batata P",
+        price: 32.00,
+        badge: "Destaque da Chapa",
+        description: "2 Hambúrgueres artesanais 100% carne, queijo cheddar fatiado, cebola caramelizada, molho cheddar cremoso no pão brioche + batata frita sequinha.",
+        ingredients: ["Pão Brioche", "2 Carnes 100%", "Cheddar", "Cebola Caramelizada", "Batata P"],
+        image: "assets/cheddar_artesanal.jpg",
+        highlight: true
+    },
     // =========================================================================
     // 1. LANCHES ARTESANAIS (100% CARNE) - Folheto: preco (2).jpeg
     // =========================================================================
