@@ -24,7 +24,7 @@ const RESTAURANT_CONFIG = {
 
 const MENU_CATEGORIES = [
     { id: "promocao", name: "PROMOÇÃO" },
-    { id: "artesanais", name: "Artesanais" },
+    { id: "especiais", name: "Especiais Cheddar" },
     { id: "doces", name: "Novidades Doces" },
     { id: "novidades", name: "Novidades Salgadas" },
     { id: "combos", name: "Combos" },
@@ -56,7 +56,7 @@ const MENU_ITEMS = [
         name: "X-Calabresa + Batata Frita P + Sukita 200ml",
         price: 30.00,
         badge: "Super Promoção",
-        description: "Pão artesanal, hambúrguer, queijo derretido, calabresa fatiada dourada, alface, tomate e molhos da casa + batata frita crocante + sukita gelada.",
+        description: "Pão macio na chapa, hambúrguer, queijo derretido, calabresa fatiada dourada, alface, tomate e molhos da casa + batata frita crocante + sukita gelada.",
         ingredients: ["Pão", "Hambúrguer", "Calabresa", "Queijo", "Batata Frita P", "Sukita 200ml"],
         image: "assets/combo1.jpg",
         highlight: true
@@ -64,58 +64,58 @@ const MENU_ITEMS = [
     {
         id: "promo_artesanal_cheddar",
         category: "promocao",
-        name: "Combo Cheddar Artesanal + Batata P",
+        name: "Combo Cheddar Especial + Batata P",
         price: 32.00,
         badge: "Destaque da Chapa",
-        description: "2 Hambúrgueres artesanais 100% carne, queijo cheddar fatiado, cebola caramelizada, molho cheddar cremoso no pão brioche + batata frita sequinha.",
-        ingredients: ["Pão Brioche", "2 Carnes 100%", "Cheddar", "Cebola Caramelizada", "Batata P"],
+        description: "2 Hambúrgueres suculentos, queijo cheddar fatiado, cebola caramelizada, molho cheddar cremoso no pão brioche + batata frita sequinha.",
+        ingredients: ["Pão Brioche", "2 Carnes", "Cheddar", "Cebola Caramelizada", "Batata P"],
         image: "assets/cheddar_artesanal.jpg",
         highlight: true
     },
     // =========================================================================
-    // 1. LANCHES ARTESANAIS (100% CARNE) - Folheto: preco (2).jpeg
+    // 1. LINHA CHEDDAR ESPECIAL - Folheto: preco (2).jpeg
     // =========================================================================
     {
         id: "artesanal_cheddar",
-        category: "artesanais",
-        name: "1. Cheddar Artesanal",
+        category: "especiais",
+        name: "1. Cheddar Especial",
         price: 24.00,
-        badge: "100% Carne",
-        description: "Pão brioche dourado, 2 hambúrgueres artesanais suculentos 100% carne, cremoso molho cheddar, queijo cheddar fatiado derretido e saborosa cebola caramelizada.",
-        ingredients: ["Pão Brioche", "2 Carnes Artesanais", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada"],
+        badge: "Duplo Hambúrguer",
+        description: "Pão brioche dourado, 2 hambúrgueres suculentos, cremoso molho cheddar, queijo cheddar fatiado derretido e saborosa cebola caramelizada.",
+        ingredients: ["Pão Brioche", "2 Carnes", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada"],
         image: "assets/cheddar_artesanal.jpg",
         highlight: true
     },
     {
         id: "artesanal_cheddar_bacon",
-        category: "artesanais",
+        category: "especiais",
         name: "2. Cheddar Bacon",
         price: 26.00,
         badge: "Favorito do Público ⭐",
-        description: "Pão brioche selado, 2 hambúrgueres 100% carne grelhados na chapa, farto molho cheddar cremoso, queijo cheddar derretido, cebola caramelizada e tiras de bacon crocante.",
-        ingredients: ["Pão Brioche", "2 Carnes Artesanais", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Bacon Crocante"],
+        description: "Pão brioche selado, 2 hambúrgueres grelhados na chapa, farto molho cheddar cremoso, queijo cheddar derretido, cebola caramelizada e tiras de bacon crocante.",
+        ingredients: ["Pão Brioche", "2 Carnes", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Bacon Crocante"],
         image: "assets/cheddar_bacon.jpg",
         highlight: true
     },
     {
         id: "artesanal_cheddar_egg",
-        category: "artesanais",
+        category: "especiais",
         name: "3. Cheddar Egg",
         price: 26.00,
-        badge: "Artesanal Clássico",
-        description: "Pão brioche macio, 2 hambúrgueres 100% carne, molho cheddar artesanal, queijo cheddar derretido, cebola caramelizada dourada e ovo estalado com gema no ponto.",
-        ingredients: ["Pão Brioche", "2 Carnes Artesanais", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Ovo Frito"],
+        badge: "Clássico da Casa",
+        description: "Pão brioche macio, 2 hambúrgueres, molho cheddar cremoso, queijo cheddar derretido, cebola caramelizada dourada e ovo estalado com gema no ponto.",
+        ingredients: ["Pão Brioche", "2 Carnes", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Ovo Frito"],
         image: "assets/cheddar_egg.jpg",
         highlight: false
     },
     {
         id: "artesanal_cheddar_egg_bacon",
-        category: "artesanais",
+        category: "especiais",
         name: "4. Cheddar Egg Bacon",
         price: 30.00,
-        badge: "Artesanal Supremo 👑",
-        description: "Pão brioche tostado na manteiga, 2 hambúrgueres 100% carne, dose dupla de molho cheddar cremoso, queijo cheddar, cebola caramelizada, ovo frito e bacon artesanal fatiado.",
-        ingredients: ["Pão Brioche", "2 Carnes Artesanais", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Ovo Frito", "Bacon"],
+        badge: "Supremo Especial 👑",
+        description: "Pão brioche tostado na manteiga, 2 hambúrgueres, dose dupla de molho cheddar cremoso, queijo cheddar, cebola caramelizada, ovo frito e bacon fatiado.",
+        ingredients: ["Pão Brioche", "2 Carnes", "Molho Cheddar", "Queijo Cheddar", "Cebola Caramelizada", "Ovo Frito", "Bacon"],
         image: "assets/cheddar_egg_bacon.jpg",
         highlight: true
     },
@@ -649,7 +649,7 @@ const MENU_ITEMS = [
 ];
 
 const ORIGINAL_FLYERS = [
-    { title: "Lanches Artesanais 100% Carne", path: "assets/flyer_artesanais.jpeg" },
+    { title: "Lanches Linha Cheddar Especial", path: "assets/flyer_artesanais.jpeg" },
     { title: "Novidades Doces (Nutella & Morango)", path: "assets/flyer_doces.jpeg" },
     { title: "Novidades Salgadas (X Dog, Salame, Toscana, Brutal 2.0)", path: "assets/flyer_novidades.jpeg" },
     { title: "Combos Simples & Mega Combos", path: "assets/flyer_combos.jpeg" },
