@@ -35,7 +35,7 @@ function initApp() {
 
 /* ==========================================================================
    STORE STATUS (ABERTO / FECHADO POR HORÁRIO)
-   Terça a Domingo: 18h30 às 23h30 | Segunda: Fechado
+   Quarta a Domingo: 19h30 às 01h00 | Segunda e Terça: Fechado
    ========================================================================== */
 function updateStoreStatus() {
     const strip = document.getElementById("storeStatusStrip");
@@ -43,30 +43,42 @@ function updateStoreStatus() {
     if (!strip || !textEl) return;
 
     const now = new Date();
-    const day = now.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const currentTimeInMinutes = hours * 60 + minutes;
+    const day = now.getDay(); // 0 = Domingo, 1 = Segunda, 2 = Terça, 3 = Quarta, 4 = Quinta, 5 = Sexta, 6 = Sábado
+    const currentMins = now.getHours() * 60 + now.getMinutes();
 
-    const openTimeInMinutes = 18 * 60 + 30; // 18h30
-    const closeTimeInMinutes = 23 * 60 + 30; // 23h30
+    let isOpen = false;
+    let message = "";
 
-    // Segunda-feira (1) é fechado
-    const isWorkingDay = day !== 1;
-    const isOpenHours = currentTimeInMinutes >= openTimeInMinutes && currentTimeInMinutes <= closeTimeInMinutes;
+    // Madrugada de 00:00 até 01:00 (continuação da noite anterior aberta: Qua, Qui, Sex, Sáb, Dom)
+    if (currentMins < 60) {
+        if ([4, 5, 6, 0, 1].includes(day)) {
+            isOpen = true;
+            message = "Aberto agora • Fazendo entrega";
+        }
+    }
 
-    if (isWorkingDay && isOpenHours) {
+    if (!isOpen) {
+        // Noite: 19:30 (1170 min) às 23:59 nos dias de Quarta a Domingo
+        if ([3, 4, 5, 6, 0].includes(day)) {
+            if (currentMins >= (19 * 60 + 30)) {
+                isOpen = true;
+                message = "Aberto agora • Fazendo entrega";
+            } else {
+                isOpen = false;
+                message = "Loja fechada no momento • Abre hoje às 19h30";
+            }
+        } else {
+            isOpen = false;
+            message = "Loja fechada hoje • Abre Quarta às 19h30";
+        }
+    }
+
+    if (isOpen) {
         strip.className = "store-status-strip open-now";
-        textEl.textContent = "Aberto agora • Fazendo entrega";
+        textEl.textContent = message;
     } else {
         strip.className = "store-status-strip closed-now";
-        if (day === 1) {
-            textEl.textContent = "Loja fechada hoje (Segunda-feira) • Abre Terça às 18h30";
-        } else if (currentTimeInMinutes < openTimeInMinutes) {
-            textEl.textContent = "Loja fechada no momento • Abre hoje às 18h30";
-        } else {
-            textEl.textContent = "Loja fechada • Abre amanhã às 18h30";
-        }
+        textEl.textContent = message;
     }
 }
 
