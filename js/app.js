@@ -181,7 +181,8 @@ function renderItemRowHtml(item) {
     // Miniatura ou ícone fallback
     let mediaHtml = "";
     if (item.image) {
-        mediaHtml = `<img src="${item.image}" alt="${item.name}" loading="lazy" />`;
+        const fallbackSrc = item.id === 'acai_copo_500ml' ? ` onerror="this.onerror=null; this.src='../../../antigravity/brain/37a3841e-4cc4-481b-80a9-7ce05c73f16f/acai_copo_500ml_1793818648537.jpg';"` : "";
+        mediaHtml = `<img src="${item.image}" alt="${item.name}" loading="lazy"${fallbackSrc} />`;
     } else {
         // Fallback para itens sem foto (por exemplo bebidas ou porções específicas)
         const icon = item.category === "bebidas" ? "🥤" : (item.category === "pasteis" ? "🥟" : "🍔");
@@ -393,12 +394,32 @@ function openOrderModal(item) {
         <div class="modal-body">
             <!-- Item Preview -->
             <div class="modal-item-preview">
-                <img src="${item.image || 'assets/hero_burger.jpg'}" alt="${item.name}" class="modal-item-thumb" />
+                <img src="${item.image || 'assets/hero_burger.jpg'}" alt="${item.name}" class="modal-item-thumb"${item.id === 'acai_copo_500ml' ? ` onerror="this.onerror=null; this.src='../../../antigravity/brain/37a3841e-4cc4-481b-80a9-7ce05c73f16f/acai_copo_500ml_1793818648537.jpg';"` : ''} />
                 <div class="modal-item-info">
                     <h4>${item.name}</h4>
                     <div class="item-price" id="modalItemTotalPrice">R$ ${(item.price).toFixed(2).replace('.', ',')}</div>
                 </div>
             </div>
+
+            <!-- Adicionais Opcionais -->
+            ${item.additionals && item.additionals.length > 0 ? `
+                <div class="form-group">
+                    <label style="font-weight: 700; font-size: 0.82rem; color: var(--primary-light); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
+                        <span>🍫 Adicionais Opcionais</span>
+                    </label>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        ${item.additionals.map(add => `
+                            <label style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 8px 12px; cursor: pointer; user-select: none;">
+                                <span style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 500;">
+                                    <input type="checkbox" class="additional-checkbox" data-id="${add.id}" data-name="${add.name}" data-price="${add.price}" style="accent-color: var(--primary); width: 18px; height: 18px; cursor: pointer;" />
+                                    <span>${add.name}</span>
+                                </span>
+                                <span style="color: var(--primary-light); font-weight: 700; font-size: 0.85rem;">+ R$ ${add.price.toFixed(2).replace('.', ',')}</span>
+                            </label>
+                        `).join("")}
+                    </div>
+                </div>
+            ` : ''}
 
             <!-- Observações ou Ingredientes -->
             <div class="form-group">
@@ -493,11 +514,31 @@ function openOrderModal(item) {
     const modalItemTotalPrice = document.getElementById("modalItemTotalPrice");
     const modalFooterTotal = document.getElementById("modalFooterTotal");
 
+    function getSelectedAdditionals() {
+        const checkboxes = container.querySelectorAll(".additional-checkbox:checked");
+        const list = [];
+        checkboxes.forEach(cb => {
+            list.push({
+                id: cb.dataset.id,
+                name: cb.dataset.name,
+                price: parseFloat(cb.dataset.price) || 0
+            });
+        });
+        return list;
+    }
+
+    function calculateUnitPrice() {
+        const adds = getSelectedAdditionals();
+        const addsTotal = adds.reduce((sum, a) => sum + a.price, 0);
+        return item.price + addsTotal;
+    }
+
     function updateQty(newQty) {
         if (newQty < 1) return;
         qty = newQty;
         qtyDisplay.textContent = qty;
-        const total = (item.price * qty).toFixed(2).replace('.', ',');
+        const unit = calculateUnitPrice();
+        const total = (unit * qty).toFixed(2).replace('.', ',');
         modalItemTotalPrice.textContent = `R$ ${total}`;
         modalFooterTotal.textContent = `R$ ${total}`;
         playAudioFeedback("click");
@@ -505,6 +546,12 @@ function openOrderModal(item) {
 
     qtyMinus.addEventListener("click", () => updateQty(qty - 1));
     qtyPlus.addEventListener("click", () => updateQty(qty + 1));
+
+    container.querySelectorAll(".additional-checkbox").forEach(cb => {
+        cb.addEventListener("change", () => {
+            updateQty(qty);
+        });
+    });
 
     container.querySelectorAll(".payment-chip").forEach(chip => {
         chip.addEventListener("click", () => {
@@ -549,7 +596,13 @@ function openOrderModal(item) {
             localStorage.setItem("lazaros_client_name", clientName);
         }
 
-        addToCart(item.id, qty, notes);
+        const adds = getSelectedAdditionals();
+        const unitPrice = calculateUnitPrice();
+        let finalName = item.name;
+        if (adds.length > 0) {
+            finalName += ` (+ ${adds.map(a => a.name).join(", ")})`;
+        }
+        addToCart(item.id, qty, notes, unitPrice, finalName);
         modal.classList.remove("open");
         playAudioFeedback("success");
         showToast(`🎉 ${qty}x ${item.name} adicionado à sacola!`);
@@ -571,9 +624,15 @@ function openOrderModal(item) {
         localStorage.setItem("lazaros_address", JSON.stringify(AppState.userAddress));
         updateProfileModalAddress();
 
-        const totalPrice = (item.price * qty).toFixed(2).replace('.', ',');
+        const adds = getSelectedAdditionals();
+        const unitPrice = calculateUnitPrice();
+        const totalPrice = (unitPrice * qty).toFixed(2).replace('.', ',');
+        let itemTitle = `${qty}x ${item.name}`;
+        if (adds.length > 0) {
+            itemTitle += ` (+ ${adds.map(a => a.name).join(", ")})`;
+        }
         let msg = `Olá, *${RESTAURANT_CONFIG.name}*! Gostaria de fazer o seguinte pedido:\n\n`;
-        msg += `🍔 *Item*: ${qty}x ${item.name}\n`;
+        msg += `🛍️ *Item*: ${itemTitle}\n`;
         msg += `💰 *Valor Total*: R$ ${totalPrice}\n`;
         
         if (notes) {
@@ -605,15 +664,18 @@ function openOrderModal(item) {
 /* ==========================================================================
    CART ENGINE & BOTTOM NAVIGATION INTEGRATION
    ========================================================================== */
-function addToCart(itemId, qty = 1, notes = "") {
+function addToCart(itemId, qty = 1, notes = "", customPrice = null, customName = null) {
     const item = MENU_ITEMS.find(i => i.id === itemId);
     if (!item) return;
 
-    const existing = AppState.cart.find(c => c.id === itemId && (c.notes || "") === (notes || ""));
+    const price = customPrice !== null ? customPrice : item.price;
+    const name = customName !== null ? customName : item.name;
+
+    const existing = AppState.cart.find(c => c.id === itemId && c.name === name && (c.notes || "") === (notes || ""));
     if (existing) {
         existing.quantity += qty;
     } else {
-        AppState.cart.push({ ...item, quantity: qty, notes: notes });
+        AppState.cart.push({ ...item, name, price, quantity: qty, notes: notes });
     }
 
     localStorage.setItem("lazaros_cart", JSON.stringify(AppState.cart));

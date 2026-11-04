@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "site": "lazaros-burger",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.git/**",
+      "**/.*",
+      "**/node_modules/**",
+      "deploy.bat",
+      "powershell.bat",
+      "copy_helper.html"
+    ]
+  }
+}

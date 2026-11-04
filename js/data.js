@@ -27,7 +27,7 @@ const MENU_CATEGORIES = [
     { id: "doces", name: "Novidade Doce" },
     { id: "pasteis", name: "Pastel" },
     { id: "porcoes", name: "Porção" },
-    { id: "acai", name: "Açaí na Garrafa" },
+    { id: "acai", name: "Açaí" },
     { id: "bebidas", name: "Bebidas" }
 ];
 
@@ -587,8 +587,22 @@ const MENU_ITEMS = [
     },
 
     // ===
-    // 10. AÇAÍ NA GARRAFA (R$ 15,00 CADA)
+    // 10. AÇAÍ (COPO & GARRAFA)
     // ===
+    {
+        id: "acai_copo_500ml",
+        category: "acai",
+        name: "Açaí no Copo 500ml",
+        price: 18.00,
+        badge: "Copo Especial ⭐",
+        description: "Açaí cremoso no copo 500ml. Acompanha banana fresca, granola crocante, leite em pó e leite condensado. Adicional: Cobertura de chocolate (+ R$ 3,00).",
+        ingredients: ["Açaí 500ml", "Banana", "Granola", "Leite em Pó", "Leite Condensado"],
+        image: "assets/acai_copo_500ml.jpg",
+        highlight: true,
+        additionals: [
+            { id: "cobertura_chocolate", name: "Cobertura de Chocolate", price: 3.00 }
+        ]
+    },
     {
         id: "acai_mousse_maracuja",
         category: "acai",
