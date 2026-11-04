@@ -32,9 +32,9 @@ const MENU_CATEGORIES = [
 ];
 
 const MENU_ITEMS = [
-    // =========================================================================
+    // ===
     // 1. PROMOÇÃO
-    // =========================================================================
+    // ===
     {
         id: "promo_xbacon_combo",
         category: "promocao",
@@ -69,9 +69,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 2. TRADICIONAIS
-    // =========================================================================
+    // ===
     {
         id: "trad_x_burguer",
         category: "lanches",
@@ -88,10 +88,17 @@ const MENU_ITEMS = [
         category: "lanches",
         name: "X-Salada",
         price: 12.00,
+
         badge: "",
         description: "Pão, hambúrguer, queijo, presunto, alface, tomate e molho.",
         ingredients: ["Pão", "Hambúrguer", "Queijo", "Presunto", "Alface", "Tomate", "Molho"],
-        image: "assets/combo_xsalada.jpg",
+
+
+
+
+
+        image: "assets/burger_xsalada.jpg",
+
         highlight: false
     },
     {
@@ -102,7 +109,7 @@ const MENU_ITEMS = [
         badge: "",
         description: "Pão, hambúrguer, queijo, presunto, bacon e molho.",
         ingredients: ["Pão", "Hambúrguer", "Bacon", "Queijo", "Presunto", "Molho"],
-        image: "assets/combo_xbacon.jpg",
+        image: "assets/burger_xbacon.jpg",
         highlight: true
     },
     {
@@ -110,10 +117,17 @@ const MENU_ITEMS = [
         category: "lanches",
         name: "X-Egg",
         price: 14.00,
+
         badge: "",
         description: "Pão, hambúrguer, queijo, presunto, ovo, alface e tomate.",
         ingredients: ["Pão", "Ovo", "Hambúrguer", "Queijo", "Presunto", "Alface", "Tomate"],
-        image: "assets/combo_xtudo.jpg",
+
+
+
+
+
+        image: "assets/burger_xegg.jpg",
+
         highlight: false
     },
     {
@@ -124,7 +138,7 @@ const MENU_ITEMS = [
         badge: "",
         description: "Pão, hambúrguer, queijo, presunto, ovo e bacon.",
         ingredients: ["Pão", "Ovo", "Bacon", "Hambúrguer", "Queijo", "Presunto"],
-        image: "assets/combo_xbacon.jpg",
+        image: "assets/burger_xegg_bacon.jpg",
         highlight: false
     },
     {
@@ -165,10 +179,17 @@ const MENU_ITEMS = [
         category: "lanches",
         name: "X-Tudo",
         price: 20.00,
+
         badge: "Completo",
         description: "Pão, hambúrguer, queijo, presunto, ovo, bacon, calabresa, alface, tomate, batata palha e molho.",
         ingredients: ["Pão", "Hambúrguer", "Queijo", "Presunto", "Ovo", "Bacon", "Calabresa", "Alface", "Tomate", "Batata Palha", "Molho"],
-        image: "assets/combo_xtudo.jpg",
+
+
+
+
+
+        image: "assets/burger_xtudo.jpg",
+
         highlight: true
     },
     {
@@ -194,9 +215,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 3. NOVIDADE SALG.
-    // =========================================================================
+    // ===
     {
         id: "novidade_lanche_frango",
         category: "novidades",
@@ -253,9 +274,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 4. ARTESANAIS
-    // =========================================================================
+    // ===
     {
         id: "artesanal_cheddar",
         category: "artesanais",
@@ -301,9 +322,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 5. COMBO
-    // =========================================================================
+    // ===
     {
         id: "combo_1",
         category: "combos",
@@ -313,6 +334,7 @@ const MENU_ITEMS = [
         description: "X-Salada (pão, hambúrguer, queijo, presunto, alface, tomate e molho) + batata simples + refrigerante em lata.",
         ingredients: ["Pão", "Hambúrguer", "Queijo", "Presunto", "Alface", "Tomate", "Batata Simples", "Refri Lata"],
         image: "assets/combo_xsalada.jpg",
+
         highlight: false
     },
     {
@@ -335,12 +357,13 @@ const MENU_ITEMS = [
         description: "X-Tudo (pão, hambúrguer, queijo, presunto, ovo, bacon, calabresa, alface, tomate, batata palha e molho) + batata simples + refrigerante em lata.",
         ingredients: ["Pão", "Hambúrguer", "Queijo", "Presunto", "Ovo", "Bacon", "Calabresa", "Alface", "Tomate", "Batata Simples", "Refri Lata"],
         image: "assets/combo_xtudo.jpg",
+
         highlight: false
     },
 
-    // =========================================================================
+    // ===
     // 6. MEGA COMBO
-    // =========================================================================
+    // ===
     {
         id: "mega_1",
         category: "mega",
@@ -375,9 +398,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 7. NOVIDADE DOCE
-    // =========================================================================
+    // ===
     {
         id: "doce_sensacao",
         category: "doces",
@@ -412,9 +435,9 @@ const MENU_ITEMS = [
         highlight: false
     },
 
-    // =========================================================================
+    // ===
     // 8. PASTEL (R$ 15,00 CADA)
-    // =========================================================================
+    // ===
     {
         id: "pastel_queijo",
         category: "pasteis",
@@ -504,9 +527,9 @@ const MENU_ITEMS = [
         highlight: false
     },
 
-    // =========================================================================
+    // ===
     // 9. PORÇÃO
-    // =========================================================================
+    // ===
     {
         id: "batata_simples",
         category: "porcoes",
@@ -563,9 +586,9 @@ const MENU_ITEMS = [
         highlight: false
     },
 
-    // =========================================================================
+    // ===
     // 10. AÇAÍ NA GARRAFA (R$ 15,00 CADA)
-    // =========================================================================
+    // ===
     {
         id: "acai_mousse_maracuja",
         category: "acai",
@@ -633,9 +656,9 @@ const MENU_ITEMS = [
         highlight: true
     },
 
-    // =========================================================================
+    // ===
     // 11. BEBIDAS (SEM CERVEJAS)
-    // =========================================================================
+    // ===
     {
         id: "bebida_coca_1_5l",
         category: "bebidas",
